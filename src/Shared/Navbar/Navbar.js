@@ -1,55 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../../contexts/UserContext';
 
 const Navbar = () => {
+    const { user, logOut } = useContext(AuthContext)
     return (
-        <div className="navbar bg-base-300">
-            <div className="navbar-start">
-                <div className="dropdown">
-                    <label tabIndex={0} className="btn btn-ghost lg:hidden">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
-                    </label>
-                    <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[2] p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><a>Item 1</a></li>
-                        <li>
-                            <a>Parent</a>
-                            <ul className="p-2">
-                                <li><a>Submenu 1</a></li>
-                                <li><a>Submenu 2</a></li>
-                            </ul>
-                        </li>
-                        <li><a>Item 3</a></li>
-                    </ul>
-                </div>
-                <a className="btn btn-ghost normal-case text-xl">Online Shopping</a>
+        <nav className='flex justify-between items-center px-[140px] bg-[#1C2B35] text-white h-20'>
+            <h2>Online Shopping</h2>
+            <div className='menu'>
+                <Link className='mr-3 hover:text-orange-300' to="/">Shop</Link>
+                <Link className='mr-3 hover:text-orange-300' to="/orders">Orders</Link>
+                <Link className='mr-3 hover:text-orange-300' to="/inventory">Inventory</Link>
+                <Link className='mr-3 hover:text-orange-300' to="/about">About</Link>
+                {
+                    user?.uid ?
+                        <button className='btn-logout hover:text-orange-300' onClick={logOut}>Log out</button>
+                        :
+                        <>
+                            <Link className='mr-3 hover:text-orange-300' to="/login">Login</Link>
+                            <Link className='mr-3 hover:text-orange-300' to="/signup">Sign up</Link>
+                        </>
+                }
             </div>
-            <div className="navbar-center hidden lg:flex">
-                <ul className="menu menu-horizontal px-1">
-                    <li><a>Shops</a></li>
-                    <li><a>Cart</a></li>
-                    <li tabIndex={0}>
-                        <details>
-                            <summary>User</summary>
-                            <ul className="p-2">
-                                <li><a>SignUp</a></li>
-                                <li><a>Login</a></li>
-                            </ul>
-                        </details>
-                    </li>
-                    <li tabIndex={0}>
-                        <details>
-                            <summary>Admin</summary>
-                            <ul className="p-2">
-                                <li><a>SignUp</a></li>
-                                <li><a>Login</a></li>
-                            </ul>
-                        </details>
-                    </li>
-                </ul>
-            </div>
-            <div className="navbar-end">
-                <a className="btn">user</a>
-            </div>
-        </div>
+        </nav>
     );
 };
 
